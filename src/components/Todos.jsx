@@ -44,6 +44,7 @@ const Todos = () => {
 
   if (loading) return <p>Cargando todos...</p>;
   if (error) return <p>Error: {error}</p>;
+// commit: función para marcar todos como completado o pendiente
 
   return (
     <div>
