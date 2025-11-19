@@ -66,3 +66,4 @@ const Todos = () => {
 
 export default Todos;
 // commit: implementación de listado de todos desde API
+// commit: manejo básico de errores en peticiones con try/catch
