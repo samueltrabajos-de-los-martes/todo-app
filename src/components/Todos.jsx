@@ -46,12 +46,14 @@ const Todos = () => {
   return (
     <div>
       <h2>Lista de todos</h2>
+      <input type="text" placeholder="Filtrar tareas (por implementar)" disabled />
       {todos.map((todo) => (
         <div key={todo.id} style={{ border: "1px solid #ccc", padding: "10px", margin: "10px 0" }}>
           <h3>{todo.title}</h3>
           <p>{todo.completed ? "Completado" : "Pendiente"}</p>
           <button onClick={() => toggleTodo(todo.id)}>Alternar</button>
           <button onClick={() => deleteTodo(todo.id)}>Eliminar</button>
+          <button onClick={() => alert("Función editar por implementar")}>Editar</button>
         </div>
       ))}
     </div>
