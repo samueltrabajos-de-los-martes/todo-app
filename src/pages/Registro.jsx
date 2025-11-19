@@ -1,3 +1,6 @@
+
+{/* commit: formulario para crear nuevos todos con validación básica */}
+
 import { useState } from 'react';
 
 function Registro() {
