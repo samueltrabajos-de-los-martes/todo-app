@@ -1,3 +1,5 @@
+// commit: creación de estructura inicial con rutas
+
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import Registro from './pages/Registro';
