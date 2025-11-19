@@ -1,40 +1,61 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-function Todos() {
+const Todos = () => {
   const [todos, setTodos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Fetch inicial de todos desde la API
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/todos?_limit=5')
-      .then(res => res.json())
-      .then(data => { setTodos(data); setLoading(false); })
-      .catch(err => { setError(err); setLoading(false); });
+    const fetchTodos = async () => {
+      try {
+        const response = await fetch("https://jsonplaceholder.typicode.com/todos?_limit=5");
+        if (!response.ok) throw new Error("Error al obtener los todos");
+        const data = await response.json();
+        setTodos(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTodos();
   }, []);
 
-  if(loading) return <p>Cargando...</p>;
-  if(error) return <p>Error al cargar todos</p>;
+  // Toggle de estado completado / pendiente
+  const toggleTodo = (id) => {
+    const updatedTodos = todos.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, completed: !todo.completed };
+      }
+      return todo;
+    });
+    setTodos(updatedTodos);
+  };
 
-  const toggleCompleted = (id) => {
-    setTodos(todos.map(todo => todo.id === id ? {...todo, completed: !todo.completed} : todo));
-  }
-
+  // Eliminar todo
   const deleteTodo = (id) => {
-    setTodos(todos.filter(todo => todo.id !== id));
-  }
+    const updatedTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(updatedTodos);
+  };
+
+  if (loading) return <p>Cargando todos...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <div>
-      {todos.map(todo => (
-        <div key={todo.id} style={{border:'1px solid #ccc', margin:'5px', padding:'5px'}}>
-          <p>{todo.title}</p>
-          <p>{todo.completed ? 'Completado' : 'Pendiente'}</p>
-          <button onClick={() => toggleCompleted(todo.id)}>Toggle</button>
+      <h2>Lista de todos</h2>
+      {todos.map((todo) => (
+        <div key={todo.id} style={{ border: "1px solid #ccc", padding: "10px", margin: "10px 0" }}>
+          <h3>{todo.title}</h3>
+          <p>{todo.completed ? "Completado" : "Pendiente"}</p>
+          <button onClick={() => toggleTodo(todo.id)}>Alternar</button>
           <button onClick={() => deleteTodo(todo.id)}>Eliminar</button>
         </div>
       ))}
     </div>
   );
-}
+};
 
 export default Todos;
