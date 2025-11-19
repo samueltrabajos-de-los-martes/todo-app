@@ -45,6 +45,7 @@ const Todos = () => {
   if (loading) return <p>Cargando todos...</p>;
   if (error) return <p>Error: {error}</p>;
 // commit: función para marcar todos como completado o pendiente
+// commit: estados de carga y mensajes de espera con useState
 
   return (
     <div>
